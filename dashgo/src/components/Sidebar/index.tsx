@@ -1,35 +1,36 @@
-import { Box, Icon, Link, Stack, Text } from "@chakra-ui/react";
-import { RiContactsLine, RiDashboardLine, RiGitMergeLine, RiInputMethodLine } from "react-icons/ri";
-import { NavSection } from "./NavSection";
+import { Box, Drawer, DrawerBody, DrawerCloseButton, DrawerContent, DrawerHeader, DrawerOverlay, useBreakpointValue } from "@chakra-ui/react";
+import { useSidebarDrawer } from "../../contexts/SidebarDrawerContext";
+import { SidebarNav } from "./SidebarNav";
 
 export function Sidebar() {
+
+  const { isOpen, onClose } = useSidebarDrawer()
+
+  const isDrawerSidebar = useBreakpointValue({
+    base: true,
+    lg: false
+  })
+
+  if (isDrawerSidebar) {
+    return (
+      <Drawer isOpen={isOpen} placement="left" onClose={onClose} >
+        <DrawerOverlay>
+          <DrawerContent bg="gray.800" p="4">
+            <DrawerCloseButton mt="6" />
+            <DrawerHeader>Navegação</DrawerHeader>
+
+            <DrawerBody>
+              <SidebarNav />
+            </DrawerBody>
+          </DrawerContent>
+        </DrawerOverlay>
+      </Drawer>
+    )
+  }
+
   return (
     <Box as="aside" w="64" mr="8">
-      <Stack spacing="12" align="flex-start">
-
-        <NavSection title="GERAL">
-          <Link display="flex" alignItems="center">
-            <Icon as={RiDashboardLine} fontSize="20"/>
-            <Text fontWeight="medium" ml="4">Dashboard</Text>
-          </Link>
-          <Link display="flex" alignItems="center">
-            <Icon as={RiContactsLine} fontSize="20"/>
-            <Text fontWeight="medium" ml="4">Usuários</Text>
-          </Link>
-        </NavSection>
-
-        <NavSection title="AUTOMAÇÃO">
-        <Link display="flex" alignItems="center">
-              <Icon as={RiInputMethodLine} fontSize="20"/>
-              <Text fontWeight="medium" ml="4">Formulários</Text>
-            </Link>
-            <Link display="flex" alignItems="center">
-              <Icon as={RiGitMergeLine} fontSize="20"/>
-              <Text fontWeight="medium" ml="4">Automação</Text>
-            </Link>
-        </NavSection>  
-                
-      </Stack>
+      <SidebarNav />
     </Box>
   )
 }
