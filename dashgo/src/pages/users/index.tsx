@@ -4,8 +4,19 @@ import { RiAddLine, RiPencilLine } from "react-icons/ri";
 import { Header } from "../../components/Header";
 import { Pagination } from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
+import { useQuery } from 'react-query'
 
 export default function UserList() {
+
+  const query = useQuery('users', async () => {
+    const response = await fetch('https://localhost:3000/mirage/users')
+    const data = await response.json()
+
+    return data
+  })
+
+  console.log(query)
+
   const isWideVersion = useBreakpointValue({
     base: false,
     lg: true

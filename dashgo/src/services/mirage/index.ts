@@ -13,7 +13,7 @@ export function makeServer() {
     },
 
     factories: {
-      users: Factory.extend({
+      user: Factory.extend({
         name(i: number) {
           return `User ${i + 1}` 
         },
@@ -27,7 +27,7 @@ export function makeServer() {
     },
 
     seeds(server) {
-      server.createList('users', 25)
+      server.createList('user', 25)
     },
 
     routes() {
